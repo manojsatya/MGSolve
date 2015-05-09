@@ -14,7 +14,7 @@ Grid::Grid()
 Grid::Grid(size_t level){
 
 	l = level;
-	v_ = new real [l + 1];
+	//v_ = new real [l + 1];
 }
 
 /*Grid::~Grid()

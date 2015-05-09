@@ -5,6 +5,7 @@
 #include <vector>
 typedef double real ;
 
+
 class Grid
 {
     public:
@@ -24,15 +25,15 @@ class Grid
 	inline real & operator()(size_t i, size_t j) const;    
 		
 	void fill (real value);
+	void setBoundary();	
+	void print();
 	
-	
-
    private:
 	size_t y_ ;
 	size_t x_ ;
 	int l;
 	real h_ ;
-	std::vector<real> v_ ;
+	real* v_;
 
 };
 

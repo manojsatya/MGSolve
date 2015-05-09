@@ -1,6 +1,5 @@
 #ifndef MGSOLVER_H
 #define MGSOLVER_H
-#include "grid.h"
 
 #include <vector>
 class MGSolve

@@ -1,5 +1,4 @@
 #include "mgsolver.h"
-#include "grid.h"
 
 MGSolve::MGSolve()
 {

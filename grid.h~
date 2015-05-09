@@ -1,0 +1,53 @@
+#ifndef GRID_H
+#define GRID_H
+
+#include <cstdlib>
+#include <vector>
+#include <cmath>
+typedef double real ;
+
+
+class Grid
+{
+    private:
+	size_t y_ ;
+	size_t x_ ;
+	int l;
+	real h_ ;
+	real* v_;
+	
+    public:
+	explicit Grid();
+	explicit Grid(size_t level){l = level;v_ = new real [l + 1];}
+		 Grid(const Grid& grid);
+	       
+        Grid& operator=(const Grid& other);
+
+	//Get functions
+	inline size_t xsize(){x_ = pow(2,l) + 1;return x_;}
+	inline size_t ysize(){y_ = pow(2,l) + 1;return y_;}
+	inline real hsize(){h_ = 1.0 / (xsize()-1.0);return h_ ;}   
+
+	//Access functions
+	inline real & operator()(size_t i, size_t j);
+	inline real & operator()(size_t i, size_t j) const;    
+		
+	void fill (real value);
+	void setBoundary() {
+		for(size_t i=0;i<xsize();++i){
+		v_[ 0 + i] = sin(M_PI * hsize() * i) * sinh(M_PI * 0.0) ;//bottom
+		v_[xsize()*i] = sin(M_PI * 1.0) * sinh(M_PI * hsize() * i); // left
+		v_[i +(xsize()-1)*xsize()] = sin(M_PI * i * hsize()) * sinh (M_PI*xsize()*hsize());//top
+		//for(size_t i=1;i<grid[lv];++i) // Right boundary
+		v_[xsize() * i -1] = sin(M_PI * 0.0 ) * sinh(M_PI * xsize()*i);}
+
+	}
+
+			
+	
+	void print();
+	
+   
+};
+
+#endif // GRID_H

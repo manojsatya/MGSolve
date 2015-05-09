@@ -18,7 +18,7 @@ ll = atoi(argv[1]);
 nov = atoi(argv[2]); }
 
 Grid initialGrid(ll);
-initialGrid.setBoundary();
+//initialGrid.setBoundary();
 
 initialGrid.print();
 
