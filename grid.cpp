@@ -17,16 +17,16 @@ Grid::Grid(size_t level){
 	h_ = 1.0 / (x_-1.0);
 	h2_ = hsize() * hsize() ;
 
-	v_ = new real [x_ * y_];
+	v_ = new real [(x_) * (y_)];
 	//std::vector<real> v_(l+1);
 }
 
 Grid::Grid(const Grid& grid){
-	x_ = grid.xsize() ;
-	y_ = grid.ysize();
+	x_ = grid.x_ ;
+	y_ = grid.y_;
 	h_ = 1.0 / (x_-1.0);
 	h2_ = hsize() * hsize() ;
-	v_ = new real[x_ * y_];
+	v_ = new real[(x_+1) * (y_+1)];
 	//v_ = grid.v_ ;	
 	
 }
@@ -105,13 +105,13 @@ void Grid::setBoundary(){
 }*/
 
 void Grid::print(){
-	std::cout << xsize() << std::endl;
-	std::cout << ysize() << std::endl;
-	std::cout << hsize() << std::endl;
-	std::cout << h2size() << std::endl;
+	//std::cout <<"xsize:"<< xsize() << std::endl;
+	//std::cout <<"ysize:"<< ysize() << std::endl;
+	//std::cout <<"hsize:"<< hsize() << std::endl;
+	//std::cout <<"h2size:"<< h2size() << std::endl;
 	for(size_t j=0 ; j< xsize() ; ++j)
 	for(size_t i=0;i<xsize();++i){
-		cout << "v_["<<i + xsize()*j<<"]="<< v_[i + xsize()*j] << endl ; // bottom
+		cout << "u["<<i + xsize()*j<<"]="<< v_[i + xsize()*j] << endl ; // bottom
 	}
 }
 

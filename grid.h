@@ -5,7 +5,9 @@
 #include <vector>
 #include <cmath>
 #include <assert.h>
+#include <iostream>
 
+using namespace std;
 typedef double real ;
 
 
@@ -47,15 +49,20 @@ class Grid
 };
 
 inline real& Grid::operator()(size_t i, size_t j){
-	assert (i < x_);
-	assert (j < y_);
-	return v_[i + j* xsize()];
+	//std::cout <<"assert y_:"<< y_ <<std::endl;
+	//std::cout <<"assert x_:"<< x_ <<std::endl;
+	//std::cout <<"assert i:"<< i <<std::endl;
+	//std::cout <<"assert j:"<< j <<std::endl;	
+	assert (i < y_);
+	assert (j < x_);
+	
+	return v_[i*x_+j];
 }
 
 inline real Grid::operator()(size_t i, size_t j)const {
-	assert (i < x_);
-	assert (j < y_);
-	return v_[i + j* xsize()];
+	assert (i < y_);
+	assert (j < x_);
+	return v_[i*x_+j];
 }
 
 
