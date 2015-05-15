@@ -55,31 +55,35 @@ void MGSolve::setInterpolationStencil(const Stencil& stencil){
 
 void MGSolve::smooth(Grid& u,Grid& f,size_t iter){
 	//iter = 2;
-	const size_t size= sizeof(u.xsize()* u.xsize());
+
+	const size_t size= (u.xsize()* u.ysize());
 	std::cout << size << std::endl;;
 	real h2 = u.h2size();
 	std::cout << h2 << std::endl;;
 	//std::cout <<"xsize:"<<<< xsize() << std::endl;
-	for(iter = 0 ; iter < 2 ; ++iter){
+	for(size_t it = 0 ; it < iter ; ++it){
 
-	for(size_t j=1;j<size-1;++j)
-		for(size_t i= 1 + (j+1)%2 ; i <size-1;++i){
+		for(size_t j=1;j<u.ysize()-1;++j)
+		{
+			for(size_t i= 1+(j+1)%2 ; i < u.xsize()-1;++i)
+			{
 
-		u[i + size*j] = 0.25 * ( h2 * f[i +size*j] 
-					+ u[(i-1) +size*j]
-					+ u[(i+1) +size*j]
-					+ u[i +size*(j+1)]
-					+ u[i +size*(j-1)]);} 
-		
+				u(i ,j) = 0.25 * ( h2 * f(i ,j)) + 
+						RB_.S * u((i-1),j) +
+						RB_.N * u((i+1),j) +
+						RB_.E * u(i,(j+1)) +
+						RB_.W * u(i ,(j-1));
+			}
+		} 
+
 	for(size_t j=1;j<size-1;++j)
 		for(size_t i= 1 + (j)%2 ; i <size-1;++i){
 
-		u[i + size*j] = 0.25 * ( h2 * f[i +size*j] 
-					+ u[(i-1) +size*j]
-					+ u[(i+1) +size*j]
-					+ u[i +size*(j+1)]
-					+ u[i +size*(j-1)]);}
-
+		u(i ,j) = 0.25 * ( h2 * f(i ,j)) +
+					RB_.S * u((i-1),j) +
+					RB_.N * u((i+1),j) +
+					RB_.E * u(i,(j+1)) +
+					RB_.W * u(i ,(j-1));}
 
 	}
 }
