@@ -8,7 +8,7 @@
 
 using namespace std;
 
-size_t ll,nov;
+size_t ll,nov,pre,post;
 
 int main(int argc , char **argv)
 {
@@ -21,7 +21,12 @@ nov = atoi(argv[2]); }
 
 Grid initialGrid(ll);
 initialGrid.setBoundary();
-initialGrid.print();
+Grid f(ll);
+Grid u(initialGrid);
+u.setBoundary();
+MGSolve solution;
+solution.solve(u,f,nov,pre,post);
+u.print();
 
 
     cout << "Hello world!" << endl;
