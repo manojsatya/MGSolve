@@ -3,6 +3,7 @@
 #include <vector>
 #include <assert.h>
 #include <iostream>
+#include <cstring>
 
 using namespace std;
 
@@ -15,6 +16,14 @@ Grid::Grid(size_t level){
 
 	l = level;
 	v_ = new real [l + 1];
+	//std::vector<real> v_(l+1);
+}
+
+Grid::Grid(const Grid& grid){
+	
+	v_ = new real[l + 1];
+	v_ = grid.v_ ;	
+	
 }
 
 /*Grid::~Grid()
@@ -25,11 +34,34 @@ Grid::Grid(size_t level){
 Grid& Grid::operator=(const Grid& rhs)
 {
     if (this == &rhs) return *this; // handle self assignment
+ 	v_ = rhs.v_ ;   
+ //assignment operator
+    return *this;
+}
+
+/*Grid& Grid::operator+=(const Grid& rhs)
+{
+    if (this == &rhs) return *this; // handle self assignment
     //assignment operator
     return *this;
 }
 
-inline size_t Grid::xsize(){
+Grid& Grid::operator-=(const Grid& rhs)
+{
+    if (this == &rhs) return *this; // handle self assignment
+    //assignment operator
+    return *this;
+}
+
+Grid& Grid::operator*=(const Grid& rhs)
+{
+    if (this == &rhs) return *this; // handle self assignment
+    //assignment operator
+    return *this;
+}*/
+
+
+/*inline size_t Grid::xsize(){
 	
 	x_ = pow(2,l) + 1;		
 	return x_;
@@ -45,6 +77,11 @@ inline real Grid::hsize(){
 	return h_ ; 
 }
 
+inline real Grid::h2size(){
+	h2_ = hsize() * hsize() ;
+	return h2_ ;
+}*/
+
 void Grid::setBoundary(){
 	for(size_t i=0;i<xsize();++i){
 	v_[ 0 + i] = sin(M_PI * hsize() * i) * sinh(M_PI * 0.0) ;//bottom
@@ -55,11 +92,11 @@ void Grid::setBoundary(){
 
 	}
 
-/*inline real& Grid::operator()(size_t i, size_t j){
+inline real& Grid::operator()(size_t i, size_t j){
 	assert (i < x_);
 	assert (j < y_);
 	return v_[i + j* xsize()];
-}*/
+}
 
 /*void Grid::fill (real value){
 
@@ -71,6 +108,7 @@ void Grid::print(){
 	std::cout << xsize() << std::endl;
 	std::cout << ysize() << std::endl;
 	std::cout << hsize() << std::endl;
+	std::cout << h2size() << std::endl;
 	for(size_t j=0 ; j< xsize() ; ++j)
 	for(size_t i=0;i<xsize();++i){
 		cout << "v_["<<i + xsize()*j<<"]="<< v_[i + xsize()*j] << endl ; // bottom
