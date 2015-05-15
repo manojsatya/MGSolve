@@ -4,6 +4,8 @@
 #include <cstdlib>
 #include <vector>
 #include <cmath>
+#include <assert.h>
+
 typedef double real ;
 
 
@@ -14,24 +16,25 @@ class Grid
 	explicit Grid();
 	explicit Grid(size_t level);
 		 Grid(const Grid &grid);
-	       
+	virtual ~Grid();       
         Grid& operator=(const Grid& other);
 	//Grid& operator+=(const Grid& other);
 	//Grid& operator-=(const Grid& other);
 	//Grid& operator*=(const Grid& other);
 	//Get functions
-	inline size_t xsize(){x_ = pow(2,l) + 1;return x_;}
-	inline size_t ysize(){y_ = pow(2,l) + 1;return y_;}
-	inline real hsize(){h_ = 1.0 / (x_-1.0);return h_;}
-	inline real h2size(){h2_ = hsize() * hsize() ;return h2_;}   
+	inline size_t xsize() const {return x_;}
+	inline size_t ysize()const {return y_;}
+	inline real hsize()const {return h_;}
+	inline real h2size()const {return h2_;}   
 
 	//Access functions
-	inline real & operator()(size_t i, size_t j);
-	inline real & operator()(size_t i, size_t j) const;    
+	inline real& operator()(size_t i, size_t j);
+	inline real operator()(size_t i, size_t j) const;    
 		
 	void fill (real value);
 	void setBoundary();	
 	void print();
+	
 	
    private:
 	size_t y_ ;
@@ -42,5 +45,18 @@ class Grid
 	real* v_;
 
 };
+
+inline real& Grid::operator()(size_t i, size_t j){
+	assert (i < x_);
+	assert (j < y_);
+	return v_[i + j* xsize()];
+}
+
+inline real Grid::operator()(size_t i, size_t j)const {
+	assert (i < x_);
+	assert (j < y_);
+	return v_[i + j* xsize()];
+}
+
 
 #endif // GRID_H
