@@ -1,7 +1,5 @@
 #include "grid.h"
 #include <cmath>
-#include <vector>
-#include <assert.h>
 #include <iostream>
 #include <cstring>
 
@@ -13,16 +11,23 @@ Grid::Grid()
 }
 
 Grid::Grid(size_t level){
-
 	l = level;
-	v_ = new real [l + 1];
+	x_ = pow(2,l) + 1;
+	y_ = pow(2,l) + 1;
+	h_ = 1.0 / (x_-1.0);
+	h2_ = hsize() * hsize() ;
+
+	v_ = new real [x_ * y_];
 	//std::vector<real> v_(l+1);
 }
 
 Grid::Grid(const Grid& grid){
-	
-	v_ = new real[l + 1];
-	v_ = grid.v_ ;	
+	x_ = grid.xsize() ;
+	y_ = grid.ysize();
+	h_ = 1.0 / (x_-1.0);
+	h2_ = hsize() * hsize() ;
+	v_ = new real[x_ * y_];
+	//v_ = grid.v_ ;	
 	
 }
 
@@ -92,11 +97,6 @@ void Grid::setBoundary(){
 
 	}
 
-inline real& Grid::operator()(size_t i, size_t j){
-	assert (i < x_);
-	assert (j < y_);
-	return v_[i + j* xsize()];
-}
 
 /*void Grid::fill (real value){
 
@@ -115,8 +115,8 @@ void Grid::print(){
 	}
 }
 
-/*Grid::~Grid()
+Grid::~Grid()
 {
     //dtor
-}*/
+}
 
