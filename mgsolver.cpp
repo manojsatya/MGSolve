@@ -53,40 +53,61 @@ void MGSolve::setInterpolationStencil(const Stencil& stencil){
 	I_.SE = 0.25;	
 }
 
-void MGSolve::smooth(Grid& u,Grid& f,size_t iter){
+void MGSolve::smooth(Grid& u,const Grid& f,size_t iter){
 	//iter = 2;
 
 	const size_t size= (u.xsize()* u.ysize());
-	std::cout << size << std::endl;;
+	std::cout <<"size in Mgsolver:"<< size << std::endl;
 	real h2 = u.h2size();
-	std::cout << h2 << std::endl;;
-	//std::cout <<"xsize:"<<<< xsize() << std::endl;
+	std::cout <<"h2 in Mgsolver"<< h2 << std::endl;
+	std::cout <<"iter:"<< iter << std::endl;
+	std::cout <<"xsize:"<< u.xsize() << std::endl;
 	for(size_t it = 0 ; it < iter ; ++it){
 
-		for(size_t j=1;j<u.ysize()-1;++j)
-		{
-			for(size_t i= 1+(j+1)%2 ; i < u.xsize()-1;++i)
+		for(size_t j=1;j<u.ysize()-1;++j)				
+			for(size_t i= 1+(j%2) ; i < u.xsize()-1;i +=2)
 			{
+			//	std::cout <<"i:"<< i << std::endl;
+			//	std::cout <<"j:"<< j << std::endl;
+				u(i ,j) = 0.25 * ( h2 * f(i ,j) + 
+						u(i-1,j) +
+						u(i+1,j) +
+						u(i,j+1) +
+						u(i ,j-1));
+		std::cout << u(i,j) << std::endl;}
+		
 
-				u(i ,j) = 0.25 * ( h2 * f(i ,j)) + 
-						RB_.S * u((i-1),j) +
-						RB_.N * u((i+1),j) +
-						RB_.E * u(i,(j+1)) +
-						RB_.W * u(i ,(j-1));
-			}
-		} 
+	for(size_t j=1;j<u.ysize()-1;++j)
+		for(size_t i= 2 - (j%2) ; i <u.xsize()-1;i+=2){
 
-	for(size_t j=1;j<size-1;++j)
-		for(size_t i= 1 + (j)%2 ; i <size-1;++i){
-
-		u(i ,j) = 0.25 * ( h2 * f(i ,j)) +
-					RB_.S * u((i-1),j) +
-					RB_.N * u((i+1),j) +
-					RB_.E * u(i,(j+1)) +
-					RB_.W * u(i ,(j-1));}
-
+		u(i ,j) = 0.25 * ( h2 * f(i ,j) +
+					u((i-1),j) +
+					u((i+1),j) +
+					u(i,(j+1)) +
+					u(i ,(j-1)));
+		//std::cout << u(i,j) << std::endl;
+		}
+	     		
 	}
+
+	//u.print();
 }
+
+/*void MGSolve::print(Grid& u){
+
+	const size_t size= (u.xsize()* u.ysize());	
+	for(size_t j=0 ; j< size ; ++j)
+	for(size_t i=0;i<size;++i){
+		cout << "u["<<i + size*j<<"]="<< u(i,j) << endl ; // bottom
+	}
+}*/
+
+/*void solve(Grid& u,const Grid& f,size_t cycles,size_t pre,size_t post){
+
+	pre = 2;post=1;	
+	smooth(u,f,pre);
+}*/
+
 
 MGSolve::~MGSolve()
 {

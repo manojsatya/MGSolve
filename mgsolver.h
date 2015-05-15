@@ -33,11 +33,19 @@ class MGSolve
         MGSolve();
         virtual ~MGSolve();
         MGSolve& operator=(const MGSolve& other);
+
+	void solve(Grid& u,const Grid& f,size_t cycles,size_t pre,size_t post){
+	pre = 2;post=1;	
+	for(size_t cycle = 0;cycle<cycles;++cycle){
+	smooth(u,f,pre);
+	}
+}
 	void setSmootherStencil(const Stencil& stencil);
 	void setRestrictionStencil(const Stencil& stencil);
     	void setInterpolationStencil(const Stencil& stencil);
+	
     private:
-	void smooth(Grid& u,Grid& f,size_t iter);
+	void smooth(Grid& u,const Grid& f,size_t iter);
 	size_t levels_ ;
 	//Grids = new real*
 	Grids u_ ;
