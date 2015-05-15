@@ -1,6 +1,8 @@
 #include "grid.h"
+#include "mgsolver.h"
 
 #include <iostream>
+#include <cstdlib>
 
 
 
