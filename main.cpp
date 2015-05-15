@@ -21,8 +21,8 @@ nov = atoi(argv[2]); }
 
 Grid initialGrid(ll);
 initialGrid.setBoundary();
-
 initialGrid.print();
+
 
     cout << "Hello world!" << endl;
     return 0;
