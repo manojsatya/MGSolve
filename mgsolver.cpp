@@ -9,6 +9,16 @@ MGSolve::MGSolve()
     //ctor
 }
 
+MGSolve::MGSolve(size_t level){levels_ = level;
+for(size_t i=0;i <levels_;i++){
+	std::cout << "inside resize" << std::endl;	
+	
+		u_[i].resizeGrid(i);
+		f_[i].resizeGrid(i);
+		r_[i].resizeGrid(i);
+}
+}
+
 MGSolve& MGSolve::operator=(const MGSolve& rhs)
 {
     if (this == &rhs) return *this; // handle self assignment
@@ -53,6 +63,14 @@ void MGSolve::setInterpolationStencil(const Stencil& stencil){
 	I_.SE = 0.25;	
 }
 
+void MGSolve::solve(Grid& u,const Grid& f,size_t cycles,size_t pre,size_t post){
+	pre = 2;post=1;	
+	for(size_t cycle = 0;cycle<cycles;++cycle){
+	smooth(u,f,pre);
+	//calcResidual(u,f,r_[levels_-1]);
+	}
+}
+
 void MGSolve::smooth(Grid& u,const Grid& f,size_t iter){
 	//iter = 2;
 
@@ -92,6 +110,14 @@ void MGSolve::smooth(Grid& u,const Grid& f,size_t iter){
 
 	//u.print();
 }
+
+
+void MGSolve::calcResidual(const Grid& u,const Grid& f,Grid& r){
+
+	std::cout << "r_.xsize():"<< r.xsize() << std::endl; 
+
+}
+
 
 /*void MGSolve::print(Grid& u){
 

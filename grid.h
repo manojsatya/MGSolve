@@ -20,6 +20,7 @@ class Grid
 		 Grid(const Grid &grid);
 	virtual ~Grid();       
         Grid& operator=(const Grid& other);
+	
 	//Grid& operator+=(const Grid& other);
 	//Grid& operator-=(const Grid& other);
 	//Grid& operator*=(const Grid& other);
@@ -32,7 +33,8 @@ class Grid
 	//Access functions
 	inline real& operator()(size_t i, size_t j);
 	inline real operator()(size_t i, size_t j) const;    
-		
+
+	void resizeGrid(size_t level);		
 	void fill (real value);
 	void setBoundary();	
 	void print();

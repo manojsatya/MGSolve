@@ -36,6 +36,15 @@ Grid::Grid(const Grid& grid){
     //dtor
 }*/
 
+void Grid::resizeGrid (size_t level){
+	l = level;
+	//int xnew,ynew;
+	x_ = pow(2,l)+1;
+	y_ = pow(2,l)+1;
+	h_ = 1.0 / (x_-1.0);
+	h2_ = h_ * h_ ;
+	v_ = new real[x_ * y_];}
+
 Grid& Grid::operator=(const Grid& rhs)
 {
     if (this == &rhs) return *this; // handle self assignment
